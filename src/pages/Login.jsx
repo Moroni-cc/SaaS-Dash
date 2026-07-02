@@ -9,15 +9,28 @@ export default function Login() {
 
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!email) {
+
+        if (!email.trim()) {
             alert('Por favor ingresa un correo electrónico');
             return;
         }
-        loginUser(email, name);
-        navigate('/dashboard'); // <-- redirige después de loguear
+
+        if (!password.trim()) {
+            alert('Por favor ingresa tu contraseña');
+            return;
+        }
+
+        const success = loginUser(email, name, password);
+        if (!success) {
+            alert('Acceso denegado: correo o contraseña incorrectos');
+            return;
+        }
+
+        navigate('/dashboard');
     };
 
     // ... resto del return se queda igual
@@ -75,6 +88,8 @@ export default function Login() {
                         <input
                             type="password"
                             placeholder="••••••••"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                             className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all text-sm"
                         />
                     </div>
@@ -96,7 +111,11 @@ export default function Login() {
                 <button
                     type="button"
                     onClick={() => {
-                        loginUser('google.user@gmail.com', 'Google User');
+                        const success = loginUser('google.user@gmail.com', 'Google User', 'google123');
+                        if (!success) {
+                            alert('Acceso denegado: este usuario no está autorizado');
+                            return;
+                        }
                         navigate('/dashboard');
                     }}
                     className="w-full py-3 px-4 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-medium rounded-xl transition-colors flex items-center justify-center gap-2 text-sm"
