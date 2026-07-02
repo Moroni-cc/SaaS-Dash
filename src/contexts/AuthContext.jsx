@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
             email,
             role: 'Admin Account',
             avatar:
-                'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80'
+                'https://i.pinimg.com/736x/41/d2/15/41d215d8fa7527b1909721fdf0262cb6.jpg'
         });
     };
 
